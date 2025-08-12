@@ -1,0 +1,88 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production build
+build/
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+faceid/
+faceid-py38/
+
+# Data and training files
+data/
+application_data/
+*.h5
+*.keras
+siamese_model.h5
+siamese_model.keras
+my_model_checkpoint/
+training_checkpoints/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Cache and logs
+*.log
+.cache/
+.npm/
+.eslintcache
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+
+# Package lock files (optional - you can keep these if you want)
+package-lock.json
+yarn.lock
+
+# Model files
+*.pkl
+*.model
+*.weights
+
+# Large files
+*.zip
+*.rar
+*.tar.gz
+
+# Windows specific
+*.exe
+*.msi

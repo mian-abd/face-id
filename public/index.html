@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Face Academy - Teach AI to recognize YOU! Revolutionary face recognition using Siamese Neural Networks. Train your personal AI model in minutes." />
+    <meta name="keywords" content="face recognition, AI training, machine learning, Siamese networks, personal AI, face ID, computer vision, one-shot learning" />
+    <meta name="author" content="Mian Abd" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mian-abd.github.io/face-id/" />
+    <meta property="og:title" content="Face Academy - Teach AI to Recognize You!" />
+    <meta property="og:description" content="Revolutionary face recognition app where YOU become the AI teacher. Train your personal model in minutes!" />
+    <meta property="og:image" content="%PUBLIC_URL%/face-academy-preview.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://mian-abd.github.io/face-id/" />
+    <meta property="twitter:title" content="Face Academy - Teach AI to Recognize You!" />
+    <meta property="twitter:description" content="Revolutionary face recognition app where YOU become the AI teacher. Train your personal model in minutes!" />
+    <meta property="twitter:image" content="%PUBLIC_URL%/face-academy-preview.png" />
+    
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <title>Face Academy - Teach AI to Recognize You!</title>
+    
+    <!-- Custom CSS for unique styling -->
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      
+      .glow {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+      }
+      
+      .neon-text {
+        font-family: 'Orbitron', monospace;
+        text-shadow: 0 0 10px rgba(102, 126, 234, 0.8);
+      }
+      
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+      
+      .pulse {
+        animation: pulse 2s infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

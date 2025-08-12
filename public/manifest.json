@@ -1,0 +1,17 @@
+{
+  "short_name": "Face Academy",
+  "name": "Face Academy - Teach AI to Recognize You",
+  "description": "Revolutionary face recognition app where YOU become the AI teacher. Train your personal model in minutes!",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#667eea",
+  "background_color": "#764ba2",
+  "orientation": "portrait-primary"
+}

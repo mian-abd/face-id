@@ -1,0 +1,744 @@
+/* 🎨 Face Academy - Unique Futuristic Design */
+
+.app {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* ✨ Animated Background */
+.background-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.floating-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), rgba(102, 126, 234, 0.1));
+  animation: float 6s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+}
+
+.orb1 {
+  width: 200px;
+  height: 200px;
+  top: 10%;
+  left: -5%;
+  animation-delay: 0s;
+}
+
+.orb2 {
+  width: 150px;
+  height: 150px;
+  top: 60%;
+  right: -5%;
+  animation-delay: 2s;
+}
+
+.orb3 {
+  width: 100px;
+  height: 100px;
+  bottom: 20%;
+  left: 30%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% { 
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+/* 🎯 Stage Container */
+.stage-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 🎓 Welcome Screen Styles */
+.welcome-screen {
+  text-align: center;
+  max-width: 600px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, #fff, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+.welcome-subtitle {
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.start-button {
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  color: #000;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+.start-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
+  background: linear-gradient(45deg, #ffed4e, #ffd700);
+}
+
+/* 📝 Registration Form */
+.registration-form {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.5rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 30px;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-input {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.submit-button {
+  width: 100%;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 🎥 Training Session */
+.training-session {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.training-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.progress-container {
+  margin: 30px 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffd700, #ffed4e);
+  border-radius: 5px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.webcam-container {
+  position: relative;
+  display: inline-block;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.webcam {
+  display: block;
+  border-radius: 17px;
+}
+
+.capture-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 215, 0, 0.2);
+  border-radius: 17px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.capture-overlay.active {
+  opacity: 1;
+}
+
+.capture-button {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 20px;
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+}
+
+.capture-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(255, 107, 107, 0.5);
+}
+
+.capture-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 🔍 Recognition Test */
+.recognition-test {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.recognition-result {
+  padding: 30px;
+  border-radius: 15px;
+  margin: 20px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Orbitron', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.recognition-success {
+  background: linear-gradient(45deg, #4CAF50, #81C784);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+}
+
+.recognition-failure {
+  background: linear-gradient(45deg, #f44336, #ef5350);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(244, 67, 54, 0.3);
+}
+
+/* 🎓 Graduation Screen */
+.graduation-screen {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.graduation-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 3rem;
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+.graduation-message {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.action-button.secondary {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+}
+
+.action-button.secondary:hover {
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .welcome-title {
+    font-size: 2.5rem;
+  }
+  
+  .welcome-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .form-title,
+  .training-title {
+    font-size: 2rem;
+  }
+  
+  .graduation-title {
+    font-size: 2.2rem;
+  }
+  
+  .stage-container {
+    padding: 10px;
+  }
+  
+  .welcome-screen,
+  .registration-form,
+  .training-session,
+  .recognition-test,
+  .graduation-screen {
+    padding: 30px 20px;
+  }
+}
+
+/* 🔗 Footer */
+.app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 10px 20px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 100;
+}
+
+.app-footer p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.app-footer a {
+  color: #ffd700;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.app-footer a:hover {
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+/* 🎆 Special Effects */
+.pulse-effect {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+  }
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+  border: 2px solid rgba(102, 126, 234, 0.3);
+}
+
+/* 🔄 Loading Animation */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #ffd700;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ♿ Accessibility Enhancements */
+
+/* High contrast mode */
+.high-contrast {
+  --primary-bg: #000000;
+  --secondary-bg: #ffffff;
+  --primary-text: #ffffff;
+  --secondary-text: #000000;
+  --accent-color: #ffff00;
+  --border-color: #ffffff;
+}
+
+.high-contrast .app {
+  background: linear-gradient(135deg, #000000 0%, #333333 100%) !important;
+}
+
+.high-contrast .welcome-screen,
+.high-contrast .registration-form,
+.high-contrast .training-session,
+.high-contrast .recognition-test,
+.high-contrast .graduation-screen {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #000000 !important;
+  border: 3px solid #ffff00 !important;
+}
+
+.high-contrast .welcome-title,
+.high-contrast .form-title,
+.high-contrast .training-title,
+.high-contrast .graduation-title {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
+
+.high-contrast .form-input {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+.high-contrast .form-input:focus {
+  border-color: #ffff00 !important;
+  box-shadow: 0 0 0 3px rgba(255, 255, 0, 0.5) !important;
+}
+
+/* Reduced motion */
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Font size variations */
+[data-font-size="small"] {
+  font-size: 14px;
+}
+
+[data-font-size="normal"] {
+  font-size: 16px;
+}
+
+[data-font-size="large"] {
+  font-size: 18px;
+}
+
+[data-font-size="xl"] {
+  font-size: 20px;
+}
+
+/* Focus indicators */
+*:focus {
+  outline: 3px solid #ffd700;
+  outline-offset: 2px;
+}
+
+.high-contrast *:focus {
+  outline: 3px solid #ffff00;
+  outline-offset: 2px;
+}
+
+/* Skip link */
+.skip-link:focus {
+  top: 6px !important;
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Enhanced button states */
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Improved form accessibility */
+.form-group {
+  position: relative;
+}
+
+.form-input:invalid {
+  border-color: #ff6b6b;
+}
+
+.form-input:valid {
+  border-color: #4CAF50;
+}
+
+/* Error states */
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.error-message::before {
+  content: "⚠️";
+}
+
+/* Success states */
+.success-message {
+  color: #4CAF50;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.success-message::before {
+  content: "✅";
+}
+
+/* Loading states */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  z-index: 10;
+}
+
+/* Touch targets (minimum 44px) */
+button, 
+.clickable,
+input[type="checkbox"],
+input[type="radio"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Improved contrast for text over images */
+.text-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Animation preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast preferences */
+@media (prefers-contrast: high) {
+  .app {
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+  }
+  
+  .welcome-screen,
+  .registration-form,
+  .training-session,
+  .recognition-test,
+  .graduation-screen {
+    background: rgba(255, 255, 255, 0.95);
+    color: #000000;
+    border: 3px solid #ffff00;
+  }
+}
+
+/* Print styles */
+@media print {
+  .app-footer,
+  .floating-orb,
+  .background-animation,
+  .particle-background {
+    display: none !important;
+  }
+  
+  .stage-container {
+    background: white !important;
+    color: black !important;
+  }
+}
