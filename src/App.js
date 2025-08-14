@@ -52,13 +52,19 @@ function App() {
           }
         }
 
-        // Pre-load AI model in background
-        setLoadingMessage('Loading AI neural networks...');
-        await modelService.loadModel();
+        // Pre-load AI model in background (non-blocking)
+        try {
+          setLoadingMessage('Loading AI neural networks...');
+          await modelService.loadModel();
+          setLoadingMessage('Ready to train your AI!');
+        } catch (modelError) {
+          console.warn('Model loading failed, will retry during training:', modelError);
+          setLoadingMessage('Starting Face Academy...');
+        }
         
         announce('Face Academy loaded successfully');
         toast.success('🎓 Welcome to Face Academy!', {
-          duration: 3000,
+          duration: 2000,
           style: {
             background: 'linear-gradient(45deg, #667eea, #764ba2)',
             color: '#fff',
@@ -67,7 +73,8 @@ function App() {
 
       } catch (error) {
         console.error('App initialization error:', error);
-        toast.error('Failed to initialize app. Please refresh the page.');
+        // Don't show error toast immediately, just log
+        console.log('Continuing with basic functionality...');
       } finally {
         setIsLoading(false);
         setLoadingMessage('');

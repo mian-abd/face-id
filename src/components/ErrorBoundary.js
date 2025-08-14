@@ -9,7 +9,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }) => {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       style={{
-        min-height: '100vh',
+        minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -65,7 +65,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }) => {
             lineHeight: '1.6',
           }}
         >
-          Don't worry! Even the smartest AI systems sometimes need a reboot. 🔄
+          Don&apos;t worry! Even the smartest AI systems sometimes need a reboot. 🔄
           <br />
           Our neural networks are having a temporary glitch.
         </p>
@@ -176,7 +176,10 @@ const ErrorFallback = ({ error, resetErrorBoundary }) => {
 
 const ErrorBoundary = ({ children }) => {
   const handleError = (error, errorInfo) => {
-    console.error('Error Boundary caught an error:', error, errorInfo);
+    // In development, log to console
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error Boundary caught an error:', error, errorInfo);
+    }
     
     // In production, you'd send this to your error tracking service
     if (process.env.NODE_ENV === 'production') {

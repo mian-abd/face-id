@@ -1,6 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Webcam from 'react-webcam';
+import { dbHelpers } from '../supabaseClient';
+import modelService from '../services/modelService';
 
 const RecognitionTest = ({ user, onRecognitionResult, onStartNewSession }) => {
   const webcamRef = useRef(null);
@@ -9,28 +11,110 @@ const RecognitionTest = ({ user, onRecognitionResult, onStartNewSession }) => {
   const [confidence, setConfidence] = useState(0);
   const [showCaptureOverlay, setShowCaptureOverlay] = useState(false);
 
-  // Simulate face recognition (in real app, this would use TensorFlow.js model)
-  const simulateRecognition = useCallback((capturedImage) => {
-    // Simulate processing time
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // For demo purposes, randomly determine if it's the user
-        // In real app, this would compare against trained model
-        const isRecognized = Math.random() > 0.2; // 80% chance of recognition
-        const confidenceScore = isRecognized ? 
-          Math.random() * 0.3 + 0.7 : // 70-100% for recognized
-          Math.random() * 0.6 + 0.1;  // 10-70% for not recognized
-        
-        resolve({
-          isRecognized,
-          confidence: confidenceScore
-        });
-      }, 2000);
-    });
-  }, []);
+  // Real face recognition using trained model
+  const performRecognition = useCallback(async (capturedImage) => {
+    try {
+      console.log('🔍 Starting face recognition...');
+      
+      // Load the model if not already loaded
+      await modelService.loadModel();
+      
+      // Get user's training images from database
+      console.log('📸 Fetching training images for user:', user.id);
+      const trainingImagesResult = await dbHelpers.getTrainingImages(user.id);
+      
+      if (!trainingImagesResult.success || !trainingImagesResult.images || trainingImagesResult.images.length === 0) {
+        console.warn('⚠️ No training images found for user');
+        return {
+          isRecognized: false,
+          confidence: 0,
+          error: 'No training data found. Please train first.'
+        };
+      }
+      
+      console.log('✅ Found', trainingImagesResult.images.length, 'training images');
+      
+      // Compare against all training images and get similarities
+      console.log('🔄 Comparing against', trainingImagesResult.images.length, 'training images...');
+      const similarities = [];
+      const imageComparisons = [];
+      
+      for (let i = 0; i < Math.min(trainingImagesResult.images.length, 8); i++) { // Use up to 8 for better accuracy
+        const trainingImage = trainingImagesResult.images[i];
+        try {
+          console.log(`🖼️ Comparing with training image ${i + 1}...`);
+          
+          // Use the image URL or base64 data
+          const imageData = trainingImage.public_url || trainingImage.image_data;
+          const similarity = await modelService.predict(capturedImage, imageData);
+          
+          similarities.push(similarity);
+          imageComparisons.push({
+            imageIndex: i,
+            similarity: similarity,
+            source: trainingImage.public_url ? 'storage' : 'base64'
+          });
+          
+          console.log(`📊 Training image ${i + 1} similarity:`, similarity, `(${trainingImage.public_url ? 'from storage' : 'from base64'})`);
+        } catch (error) {
+          console.warn(`⚠️ Error comparing with training image ${i + 1}:`, error);
+        }
+      }
+      
+      if (similarities.length === 0) {
+        return {
+          isRecognized: false,
+          confidence: 0,
+          error: 'Failed to process any training images'
+        };
+      }
+      
+      // Calculate different confidence metrics
+      const avgConfidence = similarities.reduce((sum, sim) => sum + sim, 0) / similarities.length;
+      const maxConfidence = Math.max(...similarities);
+      const minConfidence = Math.min(...similarities);
+      
+      // Use a weighted approach: favor consistent high scores
+      const weightedConfidence = (avgConfidence * 0.7) + (maxConfidence * 0.3);
+      
+      console.log('📈 Confidence Analysis:', {
+        average: avgConfidence,
+        maximum: maxConfidence,
+        minimum: minConfidence,
+        weighted: weightedConfidence,
+        comparisons: imageComparisons
+      });
+      
+      // Adaptive threshold based on consistency
+      const confidenceSpread = maxConfidence - minConfidence;
+      const isConsistent = confidenceSpread < 0.3; // Less than 30% spread
+      
+      // Lower threshold if results are consistent
+      const RECOGNITION_THRESHOLD = isConsistent ? 0.4 : 0.6;
+      const finalConfidence = weightedConfidence;
+      const isRecognized = finalConfidence > RECOGNITION_THRESHOLD;
+      
+      console.log('🎯 Final confidence:', finalConfidence, 'Recognized:', isRecognized);
+      
+      return {
+        isRecognized,
+        confidence: finalConfidence
+      };
+      
+    } catch (error) {
+      console.error('❌ Recognition error:', error);
+      return {
+        isRecognized: false,
+        confidence: 0,
+        error: error.message
+      };
+    }
+  }, [user.id]);
 
   const startRecognitionTest = useCallback(async () => {
-    if (isTestingInProgress) return;
+    if (isTestingInProgress) {
+      return;
+    }
 
     const imageSrc = webcamRef.current?.getScreenshot();
     if (!imageSrc) {
@@ -48,10 +132,16 @@ const RecognitionTest = ({ user, onRecognitionResult, onStartNewSession }) => {
     }, 300);
 
     try {
-      const result = await simulateRecognition(imageSrc);
+      const result = await performRecognition(imageSrc);
       setTestResult(result.isRecognized);
       setConfidence(result.confidence);
-      onRecognitionResult(result.isRecognized);
+      
+      if (result.error) {
+        console.error('Recognition error:', result.error);
+        // You might want to show this error to the user
+      }
+      
+      onRecognitionResult(result.isRecognized, result.confidence);
     } catch (error) {
       console.error('Recognition error:', error);
       setTestResult(false);
@@ -59,10 +149,12 @@ const RecognitionTest = ({ user, onRecognitionResult, onStartNewSession }) => {
     } finally {
       setIsTestingInProgress(false);
     }
-  }, [isTestingInProgress, simulateRecognition, onRecognitionResult]);
+  }, [isTestingInProgress, performRecognition, onRecognitionResult]);
 
   const getResultMessage = () => {
-    if (testResult === null) return null;
+    if (testResult === null) {
+      return null;
+    }
     
     if (testResult) {
       return {
@@ -113,13 +205,13 @@ const RecognitionTest = ({ user, onRecognitionResult, onStartNewSession }) => {
           <>
             Welcome back to Face Academy! 🎓
             <br />
-            Let's see if I still remember you, <strong>{user.username}</strong>! 
+            Let&apos;s see if I still remember you, <strong>{user.username}</strong>! 
           </>
         ) : (
           <>
             Time for the moment of truth! 🎯
             <br />
-            Let's test if the AI learned to recognize <strong>{user.username}</strong>!
+            Let&apos;s test if the AI learned to recognize <strong>{user.username}</strong>!
           </>
         )}
       </motion.p>
@@ -269,7 +361,7 @@ const RecognitionTest = ({ user, onRecognitionResult, onStartNewSession }) => {
         <p>💡 <strong>Tips for better recognition:</strong></p>
         <p>• Use similar lighting as during training</p>
         <p>• Face the camera directly</p>
-        <p>• Remove glasses if you didn't wear them during training</p>
+        <p>• Remove glasses if you didn&apos;t wear them during training</p>
       </motion.div>
     </motion.div>
   );

@@ -1,10 +1,10 @@
 -- Face Academy Database Schema
 -- Run this in your Supabase SQL Editor
 
--- Create users table
+-- Create users table (id will be provided by Supabase Auth)
 CREATE TABLE IF NOT EXISTS users (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  username TEXT UNIQUE NOT NULL,
+  id uuid PRIMARY KEY, -- This will be the Supabase auth user ID
+  username TEXT NOT NULL,
   email TEXT,
   model_status TEXT DEFAULT 'not_trained' CHECK (model_status IN ('not_trained', 'training', 'trained', 'failed')),
   model_trained_at TIMESTAMP,

@@ -7,7 +7,9 @@ const ParticleBackground = ({ intensity = 50 }) => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     const ctx = canvas.getContext('2d');
     let animationId;
@@ -47,8 +49,12 @@ const ParticleBackground = ({ intensity = 50 }) => {
         this.y += this.vy;
 
         // Bounce off edges
-        if (this.x < 0 || this.x > canvas.width) this.vx = -this.vx;
-        if (this.y < 0 || this.y > canvas.height) this.vy = -this.vy;
+        if (this.x < 0 || this.x > canvas.width) {
+          this.vx = -this.vx;
+        }
+        if (this.y < 0 || this.y > canvas.height) {
+          this.vy = -this.vy;
+        }
 
         // Keep particles in bounds
         this.x = Math.max(0, Math.min(canvas.width, this.x));

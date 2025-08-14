@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { dbHelpers } from '../supabaseClient';
+import { dbHelpers, authHelpers } from '../supabaseClient';
+import AuthButton from './AuthButton';
 
 const UserRegistration = ({ onRegister }) => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,54 @@ const UserRegistration = ({ onRegister }) => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [authUser, setAuthUser] = useState(null);
+  const [showManualForm, setShowManualForm] = useState(false);
+
+  useEffect(() => {
+    // Check for existing session
+    const checkAuth = async () => {
+      const result = await authHelpers.getCurrentUser();
+      if (result.success && result.user) {
+        setAuthUser(result.user);
+        handleAuthenticatedUser(result.user);
+      }
+    };
+
+    checkAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = authHelpers.onAuthChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        setAuthUser(session.user);
+        handleAuthenticatedUser(session.user);
+      } else if (event === 'SIGNED_OUT') {
+        setAuthUser(null);
+      }
+    });
+
+    return () => subscription?.unsubscribe();
+  }, []);
+
+  const handleAuthenticatedUser = async (user) => {
+    setIsLoading(true);
+    try {
+      const result = await dbHelpers.createOrGetUserProfile(user);
+      if (result.success) {
+        onRegister({
+          id: result.user.id,
+          username: result.user.username,
+          email: result.user.email,
+          modelTrained: result.user.model_status === 'trained',
+          isAuthenticated: true
+        });
+      }
+    } catch (err) {
+      console.error('Profile creation error:', err);
+      setError('Failed to create profile. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -111,14 +160,58 @@ const UserRegistration = ({ onRegister }) => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.6 }}
       >
-        Let's create your AI student profile! 🎓
+        Let&apos;s create your AI student profile! 🎓
         <br />
         <small style={{ fontSize: '0.9rem', opacity: 0.8 }}>
-          Don't worry - we keep your data safe and private! 🔒
+          Don&apos;t worry - we keep your data safe and private! 🔒
         </small>
       </motion.p>
 
-      <form onSubmit={handleSubmit}>
+      {/* Google Authentication Section */}
+      {!authUser && !showManualForm && (
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+          style={{ textAlign: 'center', marginBottom: '30px' }}
+        >
+          <AuthButton user={authUser} onSignIn={handleAuthenticatedUser} />
+          
+          <motion.div
+            style={{ margin: '20px 0', color: 'rgba(255, 255, 255, 0.6)' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            <span>or</span>
+          </motion.div>
+          
+          <motion.button
+            type="button"
+            onClick={() => setShowManualForm(true)}
+            style={{
+              background: 'transparent',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              color: 'rgba(255, 255, 255, 0.8)',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              transition: 'all 0.3s ease'
+            }}
+            whileHover={{ 
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              color: 'white'
+            }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Continue without Google
+          </motion.button>
+        </motion.div>
+      )}
+
+      {(showManualForm || authUser) && (
+        <form onSubmit={handleSubmit}>
         <motion.div 
           className="form-group"
           initial={{ x: -20, opacity: 0 }}
@@ -167,7 +260,7 @@ const UserRegistration = ({ onRegister }) => {
             marginTop: '5px', 
             display: 'block' 
           }}>
-            We'll only use this to send you cool AI updates! 🚀
+            We&apos;ll only use this to send you cool AI updates! 🚀
           </small>
         </motion.div>
 
@@ -210,6 +303,7 @@ const UserRegistration = ({ onRegister }) => {
           )}
         </motion.button>
       </form>
+      )}
 
       <motion.div
         style={{ 

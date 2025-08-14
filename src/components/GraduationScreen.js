@@ -84,7 +84,7 @@ const GraduationScreen = ({ user, onNewSession, onReset }) => {
           marginBottom: '30px' 
         }}>
           <p>
-            🚀 <strong>What's Next?</strong>
+            🚀 <strong>What&apos;s Next?</strong>
             <br />
             Your AI model is now ready for real-time face recognition!
             <br />
@@ -139,7 +139,7 @@ const GraduationScreen = ({ user, onNewSession, onReset }) => {
           fontSize: '0.9rem',
           marginBottom: '15px' 
         }}>
-          Tell the world you've mastered AI face recognition!
+          Tell the world you&apos;ve mastered AI face recognition!
         </p>
         
         <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>

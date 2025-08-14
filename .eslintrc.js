@@ -4,8 +4,7 @@ module.exports = {
     'react-app/jest',
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'prettier'
+    'plugin:react-hooks/recommended'
   ],
   plugins: ['react', 'react-hooks'],
   rules: {
