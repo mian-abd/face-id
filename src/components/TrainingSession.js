@@ -26,7 +26,9 @@ const TrainingSession = ({ user, onTrainingComplete }) => {
   ];
 
   const captureImage = useCallback(() => {
-    if (isCapturing) return;
+    if (isCapturing) {
+      return;
+    }
     
     const imageSrc = webcamRef.current?.getScreenshot();
     if (!imageSrc) {
